@@ -6,6 +6,13 @@ fn main() {
     // Getting CLI arguments
     let args: Vec<String> = env::args().collect();
 
+    // Check for version flag (-v or --version)
+    if args.len() > 1 && (args[1] == "-v" || args[1] == "--version") {
+        let version = env!("CARGO_PKG_VERSION");
+        println!("Rustyfuck interpreter, version: {}", version);
+        return;
+    }
+
     // Check argument length
     if args.len() < 2 {
         eprintln!("Error: not enough arguments. Usage: <brainfuck src file> [input (optional)]")
