@@ -1,6 +1,51 @@
 # Rustyfuck
-Brainfuck interpreter in Rust, written out of boredom.
+A Brainfuck interpreter written in Rust, created out of boredom.
 
-Usage: ```./rustyfuck *brainfuck file* [input (optional)]``` or ```./rustyfuck -v/--version```, for check version
+## Prerequisites
+Before building the project, ensure you have the following installed:
 
-Project is under the Unlicense. Do whatever the fuck you want with it.
+[Rust](https://www.rust-lang.org/tools/install) (latest stable version)
+
+## Steps to Build
+
+1. Clone the repository:
+First, clone the project repository to your local machine:
+```bash
+git clone <repository-url>
+cd <project-directory>
+```
+
+2. Build the project:
+To compile the project, run the following command:
+```bash
+cargo build --release
+```
+The compiled executable will be available in the `/target/release/` directory.
+
+## Usage
+Once the project is built, you can run the Brainfuck interpreter with the following command:
+- For Linux/macOS:
+```bash
+./target/release/rustyfuck <brainfuck-file> [input (optional)]
+```
+For Windows:
+```bash
+.\target\release\rustyfuck.exe <brainfuck-file> [input (optional)]
+```
+- `<brainfuck-file>`: Path to the Brainfuck source code file you want to interpret.
+- `[input (optional)]`: Optional input string that the Brainfuck program will use for its input (if applicable).
+
+Alternatively, you can check the version of the program by running:
+
+- For Linux/macOS:
+```bash
+./target/release/rustyfuck -v  # or --version
+```
+For Windows:
+```bash
+.\target\release\rustyfuck.exe -v  # or --version
+```
+This will output the current version of the interpreter.
+
+## License
+This project is licensed under the Unlicense. Do whatever the fuck you want with it.
