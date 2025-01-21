@@ -26,14 +26,14 @@ The compiled executable will be available in the `/target/release/` directory.
 Once the project is built, you can run the Brainfuck interpreter with the following command:
 - For Linux/macOS:
 ```bash
-./target/release/rustyfuck <brainfuck-file> [input (optional)]
+./target/release/rustyfuck <brainfuck-file> [input]
 ```
 For Windows:
 ```bash
-.\target\release\rustyfuck.exe <brainfuck-file> [input (optional)]
+.\target\release\rustyfuck.exe <brainfuck-file> [input]
 ```
 - `<brainfuck-file>`: Path to the Brainfuck source code file you want to interpret.
-- `[input (optional)]`: Optional input string that the Brainfuck program will use for its input (if applicable).
+- `[input]`: Optional input string that the Brainfuck program will use for its input (if applicable).
 
 Alternatively, you can check the version of the program by running:
 
