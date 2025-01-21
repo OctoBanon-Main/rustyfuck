@@ -11,8 +11,8 @@ Before building the project, ensure you have the following installed:
 1. Clone the repository:
 First, clone the project repository to your local machine:
 ```bash
-git clone <repository-url>
-cd <project-directory>
+git clone https://github.com/OctoBanon-Main/rustyfuck.git
+cd rustyfuck
 ```
 
 2. Build the project:
