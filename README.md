@@ -28,7 +28,7 @@ Once the project is built, you can run the Brainfuck interpreter with the follow
 ```bash
 ./target/release/rustyfuck <brainfuck-file> [input]
 ```
-For Windows:
+- For Windows:
 ```bash
 .\target\release\rustyfuck.exe <brainfuck-file> [input]
 ```
@@ -41,7 +41,7 @@ Alternatively, you can check the version of the program by running:
 ```bash
 ./target/release/rustyfuck -v  # or --version
 ```
-For Windows:
+- For Windows:
 ```bash
 .\target\release\rustyfuck.exe -v  # or --version
 ```
