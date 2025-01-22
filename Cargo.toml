@@ -3,5 +3,5 @@ name = "rustyfuck"
 description = "Yet another brainfuck interpreter on Rust"
 authors = [ "Maksim Bengraf (OctoBanon) <me@octobanon.com>" ]
 license = "Unlicense"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2021"

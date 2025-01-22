@@ -9,15 +9,21 @@ pub fn parse_cli_arguments() -> Option<CliArguments> {
     // Getting CLI arguments
     let args: Vec<String> = env::args().collect();
 
+    // Print usage if not having arguments
+    if args.len() < 2 {
+        let program_name = args[0]
+            .rsplit_once(std::path::MAIN_SEPARATOR)
+            .map(|(_, name)| name)
+            .unwrap_or(&args[0]);
+
+        println!("Usage: {} <brainfuck src file> [input(optional)]", program_name);
+        return None;
+    }
+
     // Check for version flag (-v or --version)
     if args.len() > 1 && (args[1] == "-v" || args[1] == "--version") {
         let version = env!("CARGO_PKG_VERSION");
         println!("Rustyfuck interpreter, version: {}", version);
-        return None;
-    }
-
-    if args.len() < 2 {
-        eprintln!("Error: not enough arguments. Usage: <brainfuck src file> [input (optional)]");
         return None;
     }
 
