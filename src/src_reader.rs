@@ -1,10 +1,13 @@
-use std::{fs::File, io::{self, Read}};
+use std::{fs, io};
 
-pub fn read_brainfuck_files(file_path: &str) -> io::Result<String> {
-    let mut file = File::open(file_path)?;
-    let mut contents = String::new();
+pub fn read_brainfuck_files(file_path: &str) -> io::Result<Vec<u8>> {
+    let contents = fs::read(file_path)?;
 
-    file.read_to_string(&mut contents)?;
+    let filtered: Vec<u8> = contents
+        .iter()
+        .filter(|&&b| matches!(b, b'+' | b'-' | b'<' | b'>' | b'[' | b']' | b'.' | b','))
+        .cloned()
+        .collect();
 
-    Ok(contents)
+    Ok(filtered)
 }

@@ -1,8 +1,8 @@
 use std::collections::{HashMap, VecDeque};
 
 fn build_brackets_mappings(code_bytes: &[u8]) -> Result<HashMap<usize, usize>, String> {
-    let mut stack = VecDeque::new();
-    let mut bracket_map = HashMap::new();
+    let mut stack = VecDeque::with_capacity(code_bytes.len() / 10);
+    let mut bracket_map = HashMap::with_capacity(code_bytes.len() / 10);
 
     for (i, &bytes) in code_bytes.iter().enumerate() {
         match bytes {
@@ -27,14 +27,7 @@ fn build_brackets_mappings(code_bytes: &[u8]) -> Result<HashMap<usize, usize>, S
     Ok(bracket_map)
 }
 
-fn optimize_code(code: &[u8]) -> Vec<u8> {
-    code.iter()
-        .filter(|&&byte| matches!(byte, b'>' | b'<' | b'+' | b'-' | b'.' | b',' | b'[' | b']'))
-        .copied()
-        .collect()
-}
-
-pub fn brainfuck_interpreter(code: String, input: Option<Vec<u8>>) {
+pub fn brainfuck_interpreter(code: Vec<u8>, input: Option<Vec<u8>>) {
     const MEMORY_SIZE: usize = 30000;
     let mut memory: [u8; MEMORY_SIZE] = [0; MEMORY_SIZE];
     
@@ -42,8 +35,7 @@ pub fn brainfuck_interpreter(code: String, input: Option<Vec<u8>>) {
     let mut code_pointer: usize = 0;
     let mut input_poiner: usize = 0;
 
-    let optimized_code = optimize_code(&code.bytes().collect::<Vec<_>>());
-    let bracket_map = match build_brackets_mappings(&optimized_code) {
+    let bracket_map = match build_brackets_mappings(&code) {
         Ok(map) => map,
         Err(e) => {
             eprintln!("{}", e);
@@ -51,8 +43,8 @@ pub fn brainfuck_interpreter(code: String, input: Option<Vec<u8>>) {
         }
     };
 
-    while code_pointer < optimized_code.len() {
-        let command = optimized_code[code_pointer];
+    while code_pointer < code.len() {
+        let command = code[code_pointer];
 
         match command {
             b'>' => {
