@@ -1,4 +1,4 @@
 pub mod instructions;
 pub mod compiler;
-pub mod runner;
+pub mod runtime;
 pub mod interpreter;
