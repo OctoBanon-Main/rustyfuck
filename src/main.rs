@@ -1,18 +1,21 @@
-use rustyfuck::{brainfuck, cli::parse_cli_arguments, src_reader};
+use anyhow::{Result, anyhow};
 
-fn main() {
-    let args = match parse_cli_arguments() {
-        Some(args) => args,
-        None => return
-    };
+use rustyfuck::{
+    utils::{
+        cli::parse_cli_arguments,
+        file_utils::read_brainfuck_files
+    },
+    brainfuck::interpreter
+};
 
-    match src_reader::read_brainfuck_files(&args.file_path) {
-        Ok(code) => {
-            let input_bytes = &args.input.map(|s| s.bytes().collect::<Vec<u8>>());
-            brainfuck::brainfuck_interpreter(code, input_bytes.clone());
-        },
-        Err(error) => {
-            eprintln!("File reading error: {}", error)
-        }
-    }
+fn main() -> Result<()> {
+    let args = parse_cli_arguments()?
+        .ok_or_else(|| anyhow!("No arguments provided"))?;
+
+    let code = read_brainfuck_files(&args.file_path)?;
+    let input_bytes = args.input.map(|s| s.bytes().collect::<Vec<u8>>());
+
+    interpreter::brainfuck_interpreter(code, input_bytes.clone())?;
+
+    Ok(())
 }
