@@ -4,7 +4,7 @@ description = "Yet another brainfuck interpreter on Rust"
 authors = [ "Maksim Bengraf (OctoBanon) <me@octobanon.com>" ]
 license = "Unlicense"
 version = "1.0.5"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 anyhow = "1.0.97"
