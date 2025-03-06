@@ -39,11 +39,11 @@ Alternatively, you can check the version of the program by running:
 
 - For Linux/macOS:
 ```bash
-./target/release/rustyfuck -v  # or --version
+./target/release/rustyfuck -V  # or --version
 ```
 - For Windows:
 ```bash
-.\target\release\rustyfuck.exe -v  # or --version
+.\target\release\rustyfuck.exe -V  # or --version
 ```
 This will output the current version of the interpreter.
 
