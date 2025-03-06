@@ -47,5 +47,8 @@ Alternatively, you can check the version of the program by running:
 ```
 This will output the current version of the interpreter.
 
+## See also
+[Braingear](https://github.com/honakac/braingear) - Brainfuck interpreter and compiler written in C by honakac
+
 ## License
 This project is licensed under the Unlicense. Do whatever the fuck you want with it.
