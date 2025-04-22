@@ -8,6 +8,12 @@ pub fn compile(code: &[u8]) -> Result<Vec<Instruction>> {
     let len = code.len();
 
     while i < len {
+        if i + 2 < len && code[i] == b'[' && (code[i + 1] == b'-' || code[i + 1] == b'+') && code[i + 2] == b']' {
+            instructions.push(Instruction::ClearCell);
+            i += 3;
+            continue;
+        }
+        
         match code[i] {
             b'>' | b'<' => {
                 let count = match code[i] {
@@ -51,7 +57,22 @@ pub fn compile(code: &[u8]) -> Result<Vec<Instruction>> {
                     instructions.push(Instruction::Add(total));
                 }
             },
-            b'.' => instructions.push(Instruction::Output),
+            b'.' => {
+                let mut count = 1;
+                while let Some(&next) = code.get(i + 1) {
+                    if next == b'.' {
+                        count += 1;
+                        i += 1;
+                    } else {
+                        break;
+                    }
+                }
+                if count == 1 {
+                    instructions.push(Instruction::Output);
+                } else {
+                    instructions.push(Instruction::OutputN(count));
+                }
+            },
             b',' => instructions.push(Instruction::Input),
             b'[' => {
                 instructions.push(Instruction::JumpIfZero(0));

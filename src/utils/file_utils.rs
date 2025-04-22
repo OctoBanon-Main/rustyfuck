@@ -1,19 +1,17 @@
-use std::{fs, io::{self, BufReader, Read}, path::Path};
+use std::{fs, io::{self, Read}, path::Path};
 use anyhow::{bail, Result};
 
 pub fn read_brainfuck_files(file_path: &str) -> io::Result<Vec<u8>> {
-    let file = fs::File::open(file_path)?;
-    let mut reader = BufReader::new(file);
-    let mut buffer = Vec::new();
+    let mut file = fs::File::open(file_path)?;
+    let mut contents = Vec::new();
+    file.read_to_end(&mut contents)?;
 
-    let mut byte = [0u8; 1];
-    while let Ok(_) = reader.read_exact(&mut byte) {
-        if matches!(byte[0], b'+' | b'-' | b'<' | b'>' | b'[' | b']' | b'.' | b',') {
-            buffer.push(byte[0]);
-        }
-    }
+    let brainfuck_bytes = contents
+        .into_iter()
+        .filter(|&b| matches!(b, b'+' | b'-' | b'<' | b'>' | b'[' | b']' | b'.' | b','))
+        .collect();
 
-    Ok(buffer)
+    Ok(brainfuck_bytes)
 }
 
 pub fn check_file_extension(file_path: &str) -> Result<()> {

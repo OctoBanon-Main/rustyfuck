@@ -1,29 +1,37 @@
 use anyhow::Result;
+use std::io::{self, Read, Write};
+
 use super::instructions::Instruction;
 
-pub fn run(instructions: &[Instruction], input: Option<Vec<u8>>) -> Result<()> {
+pub fn run(instructions: &[Instruction]) -> Result<()> {
     const MEMORY_SIZE: usize = 30000;
     let mut memory = [0u8; MEMORY_SIZE];
     let mut pointer: usize = 0;
     let mut ip: usize = 0;
-    let mut input_pointer = 0;
-    let input_slice = input.as_deref();
+
+    let stdout = io::stdout();
+    let mut handle = stdout.lock();
 
     while ip < instructions.len() {
         match instructions[ip] {
             Instruction::Move(offset) => {
-                pointer = (((pointer as isize) + offset).rem_euclid(MEMORY_SIZE as isize)) as usize;
+                pointer = (pointer.wrapping_add(offset as usize)) % MEMORY_SIZE;
             },
             Instruction::Add(delta) => {
                 memory[pointer] = memory[pointer].wrapping_add(delta as u8);
             },
             Instruction::Output => {
-                print!("{}", memory[pointer] as char);
+                handle.write_all(&[memory[pointer]])?;
+            },
+            Instruction::OutputN(n) => {
+                let buf = vec![memory[pointer]; n];
+                handle.write_all(&buf)?;
             },
             Instruction::Input => {
-                memory[pointer] = input_slice.and_then(|bytes| bytes.get(input_pointer))
-                    .copied().unwrap_or(0);
-                input_pointer += if memory[pointer] != 0 { 1 } else { 0 };
+                memory[pointer] = io::stdin().bytes()
+                    .next()
+                    .and_then(|bytes| bytes.ok())
+                    .unwrap_or(0);
             },
             Instruction::JumpIfZero(jump) if memory[pointer] == 0 => {
                 ip = jump;
@@ -33,10 +41,14 @@ pub fn run(instructions: &[Instruction], input: Option<Vec<u8>>) -> Result<()> {
                 ip = jump;
                 continue;
             },
+            Instruction::ClearCell => {
+                memory[pointer] = 0;
+            },
             _ => {},
         }
         ip += 1;
     }
+    handle.flush()?;
     Ok(())
 }
 

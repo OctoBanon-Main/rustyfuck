@@ -13,9 +13,8 @@ fn main() -> Result<()> {
         .ok_or_else(|| anyhow!("No arguments provided"))?;
 
     let code = read_brainfuck_files(&args.file_path)?;
-    let input_bytes = args.input.map(|s| s.bytes().collect::<Vec<u8>>());
 
-    interpreter::brainfuck_interpreter(code, input_bytes.clone())?;
+    interpreter::brainfuck_interpreter(code)?;
 
     Ok(())
 }
