@@ -1,20 +1,19 @@
-use anyhow::{Result, anyhow};
+mod utils;
+mod brainfuck;
 
-use rustyfuck::{
-    utils::{
-        cli::parse_cli_arguments,
-        file_utils::read_brainfuck_files
-    },
-    brainfuck::interpreter
-};
+use anyhow::Result;
+
+use clap::Parser;
+use utils::file_utils::read_brainfuck_files;
+use brainfuck::brainfuck_interpreter;
+
+use crate::utils::cli::Args;
 
 fn main() -> Result<()> {
-    let args = parse_cli_arguments()?
-        .ok_or_else(|| anyhow!("No arguments provided"))?;
+    let args = Args::parse();
+    let code = read_brainfuck_files(&args.path)?;
 
-    let code = read_brainfuck_files(&args.file_path)?;
-
-    interpreter::brainfuck_interpreter(code)?;
-
+    brainfuck_interpreter(&code)?;
+    
     Ok(())
 }
