@@ -1,7 +1,7 @@
 [package]
 name = "rustyfuck"
 description = "Yet another brainfuck interpreter on Rust"
-authors = [ "Maksim Bengraf (OctoBanon) <me@octobanon.com>" ]
+authors = [ "Maksim Bengraf (OctoBanon) <octobanon@proton.me>" ]
 license = "Unlicense"
 version = "2.0.0"
 edition = "2024"
