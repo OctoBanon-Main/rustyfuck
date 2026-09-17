@@ -38,12 +38,12 @@ Once the project is built, you can run the Brainfuck interpreter with the follow
 - For Linux/macOS:
 
 ```bash
-./target/release/rustyfuck <path>
+./target/release/rustyfuck --path <path>
 ```
 
 - For Windows:
 ```bash
-.\target\release\rustyfuck.exe <path>
+.\target\release\rustyfuck.exe --path <path>
 ```
 
 - `<path>`: Path to the Brainfuck source code file you want to interpret.
